@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.dto;
+package kr.hhplus.be.server.interfaces.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,17 +11,22 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderRequest {
+public class OrderExternalRequest {
 
+    private Long totalRegularPrice;
+    private Long totalDiscountPrice;
+    private Long totalSalePrice;
     private List<OrderItem> orderItems;
-    private Long appliedCouponId;
 
     @Getter
     @Setter
     public static class OrderItem {
-
         private Long productId;
         private Long productOptionId;
         private Long orderCount;
+        private Long regularPrice;
+        private Long discountPrice;
+        private Long salePrice;
+        private Long appliedCouponId;
     }
 }

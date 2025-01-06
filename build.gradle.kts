@@ -40,6 +40,8 @@ dependencies {
 
 	compileOnly("org.projectlombok:lombok:1.18.36")
 
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0")
+
 	// Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")

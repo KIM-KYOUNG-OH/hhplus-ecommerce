@@ -1,17 +1,28 @@
-package kr.hhplus.be.server.api.controller;
+package kr.hhplus.be.server.interfaces.api;
 
-import kr.hhplus.be.server.api.common.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import kr.hhplus.be.server.interfaces.common.responses.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "product", description = "상품 API")
 @RestController
 @RequestMapping("/api")
 public class ProductController {
 
+    @Operation(
+            summary = "상품 목록 조회",
+            description = "상품 목록을 조회합니다."
+    )
     @GetMapping("/products")
-    public ApiResponse<Map<String, Object>> getProducts(@RequestParam Integer page, @RequestParam Integer size) {
+    public ApiResponse<Map<String, Object>> getProducts(@Parameter(description = "현재 페이지", required = true)
+                                                        @RequestParam Long page,
+                                                        @Parameter(description = "페이지 크기", required = true)
+                                                        @RequestParam Long size) {
         return ApiResponse.ok(Map.of(
                 "currentPage", page,
                 "pageSize", size,
@@ -38,8 +49,12 @@ public class ProductController {
         ));
     }
 
-    @GetMapping("/products/best")
-    public ApiResponse<Map<String, List<Object>>> getBestProducts(@RequestParam String searchStartDate, @RequestParam String searchEndDate) {
+    @Operation(
+            summary = "인기 상품 목록 조회",
+            description = "최근 3일간 가장 많이 팔린 상위 5개 상품 정보를 조회합니다."
+    )
+    @GetMapping("/products/popular")
+    public ApiResponse<Map<String, List<Object>>> getBestProducts() {
         return ApiResponse.ok(Map.of(
                 "bestProducts", List.of(
                         Map.of(
