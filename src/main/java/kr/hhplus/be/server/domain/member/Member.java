@@ -33,4 +33,13 @@ public class Member {
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
+
+    public static Member of(Long memberId, String memberName) {
+        return Member.builder()
+                .memberId(memberId)
+                .memberName(memberName)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
 }
