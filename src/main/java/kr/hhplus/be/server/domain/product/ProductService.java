@@ -1,0 +1,64 @@
+package kr.hhplus.be.server.domain.product;
+
+import kr.hhplus.be.server.infrastructure.product.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class ProductService {
+
+    private final ProductRepository productRepository;
+    private final ProductStatisticsRepository productStatisticsRepository;
+
+    @Transactional(readOnly = true)
+    public Page<Product> findAll(Pageable page) {
+        return productRepository.findAll(page);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Product> findBestProductsBetween(LocalDate searchStartDate, LocalDate searchEndDate) {
+        if (searchStartDate.isAfter(searchEndDate)) {
+            throw new IllegalArgumentException("검색 시작일은 검색 종료일보다 이전값이어야 합니다.");
+        }
+
+        LocalDateTime searchStartDateTime = searchStartDate.atStartOfDay();
+        LocalDateTime searchEndDateTime = searchEndDate.plusDays(1).atStartOfDay();
+        List<ProductStatistics> list = productStatisticsRepository.findListBetween(searchStartDateTime, searchEndDateTime);
+
+        Map<Long, Long> groupedByProductId = list.stream()
+                .collect(Collectors.groupingBy(
+                        ps -> ps.getProduct().getProductId(), // 상품명 기준으로 그룹화
+                        Collectors.summingLong(ProductStatistics::getOrderQuantity) // 각 그룹에 대해 주문 수량 합산
+                ));
+
+        List<Long> bestProductIds = groupedByProductId.entrySet().stream()
+                .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue())) // 내림차순 정렬
+                .map(Map.Entry::getKey)
+                .toList();
+
+        List<Product> result = new ArrayList<>();
+        int count = 0;
+        int limit = 5;
+        for (Long bestProductId : bestProductIds) {
+            if (count >= limit) break;
+            Product product = productRepository.findById(bestProductId).orElse(null);
+            if (product != null) {
+                result.add(product);
+                count++;
+            }
+        }
+
+        return result;
+    }
+}
