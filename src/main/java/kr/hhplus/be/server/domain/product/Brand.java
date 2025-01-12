@@ -18,7 +18,7 @@ public class Brand {
     private Long brandId;
 
     @Column(nullable = false)
-    private Long brandName;
+    private String brandName;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

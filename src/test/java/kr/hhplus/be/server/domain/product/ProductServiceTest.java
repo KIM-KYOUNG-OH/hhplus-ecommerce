@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.domain.product;
 
 import kr.hhplus.be.server.infrastructure.product.ProductRepository;
+import kr.hhplus.be.server.infrastructure.product.ProductStatisticsRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +58,7 @@ class ProductServiceTest {
         response.add(productStatistics3);
         response.add(productStatistics4);
         response.add(productStatistics5);
-        when(productStatisticsRepository.findListBetween(any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(response);
+        when(productStatisticsRepository.findListBetween(any(LocalDate.class), any(LocalDate.class))).thenReturn(response);
         when(productRepository.findById(1L)).thenReturn(Optional.of(product1));
         when(productRepository.findById(2L)).thenReturn(Optional.of(product2));
         when(productRepository.findById(3L)).thenReturn(Optional.of(product3));
@@ -89,7 +89,7 @@ class ProductServiceTest {
         response.add(productStatistics3);
         response.add(productStatistics4);
         response.add(productStatistics5);
-        when(productStatisticsRepository.findListBetween(any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(response);
+        when(productStatisticsRepository.findListBetween(any(LocalDate.class), any(LocalDate.class))).thenReturn(response);
         when(productRepository.findById(1L)).thenReturn(Optional.of(product1));
 
         List<Product> bestProducts = productService.findBestProductsBetween(LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 5));

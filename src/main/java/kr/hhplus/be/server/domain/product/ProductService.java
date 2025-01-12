@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.domain.product;
 
 import kr.hhplus.be.server.infrastructure.product.ProductRepository;
+import kr.hhplus.be.server.infrastructure.product.ProductStatisticsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +32,7 @@ public class ProductService {
             throw new IllegalArgumentException("검색 시작일은 검색 종료일보다 이전값이어야 합니다.");
         }
 
-        LocalDateTime searchStartDateTime = searchStartDate.atStartOfDay();
-        LocalDateTime searchEndDateTime = searchEndDate.plusDays(1).atStartOfDay();
-        List<ProductStatistics> list = productStatisticsRepository.findListBetween(searchStartDateTime, searchEndDateTime);
+        List<ProductStatistics> list = productStatisticsRepository.findListBetween(searchStartDate, searchEndDate);
 
         Map<Long, Long> groupedByProductId = list.stream()
                 .collect(Collectors.groupingBy(
