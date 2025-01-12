@@ -11,7 +11,7 @@ public class SwaggerConfig {
     public GroupedOpenApi api() {
         return GroupedOpenApi.builder()
                 .group("ecommerce")
-                .packagesToScan("kr.hhplus.be.server.api.controller")
+                .packagesToScan("kr.hhplus.be.server.interfaces.api")
                 .build();
     }
 }

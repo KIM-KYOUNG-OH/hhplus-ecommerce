@@ -15,7 +15,7 @@ public class ApiResponse<T> {
         return new ApiResponse<>(data);
     }
 
-    public static <T> ApiResponse<T> empty() {
-        return new ApiResponse<>(null);
+    public static ApiResponse<String> empty() {
+        return new ApiResponse<>("success");
     }
 }

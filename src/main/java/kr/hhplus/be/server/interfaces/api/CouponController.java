@@ -41,7 +41,7 @@ public class CouponController {
             description = "현재 회원에게 쿠폰을 발급합니다."
     )
     @PostMapping("/coupons")
-    public ApiResponse<Void> issueCoupon(@Parameter(description = "회원 ID", required = true)
+    public ApiResponse<String> issueCoupon(@Parameter(description = "회원 ID", required = true)
                                          @RequestHeader("x-hhplus-memberId") Long memberId,
                                          @Parameter(description = "쿠폰 발급 요청 바디", required = true)
                                          @RequestBody IssueCouponRequest request) {
