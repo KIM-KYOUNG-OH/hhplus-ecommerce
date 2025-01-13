@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public interface MyCouponRepository extends JpaRepository<MyCoupon, Long> {
         JOIN FETCH mc.coupon c
         WHERE mc.member.memberId = :memberId
        """)
-    Page<MyCoupon> findMyCoupons(Long memberId, Pageable pageable);
+    Page<MyCoupon> findMyCoupons(@Param("memberId") Long memberId, Pageable pageable);
 
     @Lock(LockModeType.PESSIMISTIC_READ)
     @Query("""
@@ -27,7 +28,7 @@ public interface MyCouponRepository extends JpaRepository<MyCoupon, Long> {
         FROM MyCoupon mc
         JOIN FETCH mc.member m
         JOIN FETCH mc.coupon c
-        WHERE mc.couponIssuedId = :couponIssuedId AND mc.isUsed = false
+        WHERE mc.couponIssuedId = :couponIssuedId
         """)
-    Optional<MyCoupon> findMyCouponByIdWithLock(Long couponIssuedId);
+    Optional<MyCoupon> findMyCouponByIdWithLock(@Param("couponIssuedId") Long couponIssuedId);
 }

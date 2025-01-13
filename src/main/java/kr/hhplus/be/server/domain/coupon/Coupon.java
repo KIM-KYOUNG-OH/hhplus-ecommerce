@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.domain.coupon;
 
 import jakarta.persistence.*;
+import kr.hhplus.be.server.domain.coupon.exception.CouponOutOfStockException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -35,11 +36,11 @@ public class Coupon {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public boolean isIssuable() {
-        return quantity > 0;
-    }
-
     public void deductQuantity() {
+        if (quantity <= 0) {
+            throw new CouponOutOfStockException("쿠폰 재고가 부족합니다.");
+        }
+
         quantity--;
     }
 }
