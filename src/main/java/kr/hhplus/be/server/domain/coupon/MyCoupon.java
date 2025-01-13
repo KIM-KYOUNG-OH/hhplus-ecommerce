@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.domain.coupon;
 
 import jakarta.persistence.*;
+import kr.hhplus.be.server.domain.coupon.exception.AlreadyUsedCouponException;
 import kr.hhplus.be.server.domain.member.Member;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,6 +47,8 @@ public class MyCoupon {
     }
 
     public void use() {
+        if (isUsed) throw new AlreadyUsedCouponException("이미 사용된 쿠폰입니다.");
+
         isUsed = true;
     }
 }

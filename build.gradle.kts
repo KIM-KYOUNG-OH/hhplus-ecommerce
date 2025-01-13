@@ -42,6 +42,10 @@ dependencies {
 
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0")
 
+	implementation("org.modelmapper:modelmapper:3.2.2")
+
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.2.0")
+
 	// Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")

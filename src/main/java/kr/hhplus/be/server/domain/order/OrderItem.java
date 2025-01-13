@@ -37,18 +37,19 @@ public class OrderItem {
     @Column(nullable = false)
     private Long quantity;
 
-    @Column(nullable = false)
-    private Long regularPrice;
-
-    @Column(nullable = false)
-    private Long discountPrice;
-
-    @Column(nullable = false)
-    private Long salePrice;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public static OrderItem of(Order order, Product product, ProductOption productOption, Long quantity) {
+        return OrderItem.builder()
+                .order(order)
+                .product(product)
+                .productOption(productOption)
+                .quantity(quantity)
+                .orderItemId(new OrderItemId(order.getOrderId(), product.getProductId(), productOption.getProductOptionId()))
+                .build();
+    }
 }
