@@ -1,7 +1,9 @@
 package kr.hhplus.be.server.domain.product;
 
+import kr.hhplus.be.server.infrastructure.product.ProductOptionRepository;
 import kr.hhplus.be.server.infrastructure.product.ProductRepository;
 import kr.hhplus.be.server.infrastructure.product.ProductStatisticsRepository;
+import kr.hhplus.be.server.interfaces.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductOptionRepository productOptionRepository;
     private final ProductStatisticsRepository productStatisticsRepository;
 
     @Transactional(readOnly = true)
@@ -58,5 +61,16 @@ public class ProductService {
         }
 
         return result;
+    }
+
+    @Transactional
+    public void deductQuantityWithLock(Long productOptionId, Long orderCount) {
+        ProductOption findProductOption = productOptionRepository.findByIdWithLock(productOptionId).orElseThrow(() -> new NotFoundException("주문한 상품을 찾을 수 없습니다."));
+        findProductOption.deductQuantity(orderCount);
+    }
+
+    @Transactional(readOnly = true)
+    public ProductOption findProductOptionById(Long productOptionId) {
+        return productOptionRepository.findByIdWithJoin(productOptionId).orElseThrow(() -> new NotFoundException("선택한 상품 옵션을 찾을 수 없습니다."));
     }
 }
