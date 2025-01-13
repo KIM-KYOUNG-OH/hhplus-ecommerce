@@ -1,5 +1,7 @@
 package kr.hhplus.be.server.interfaces.common;
 
+import kr.hhplus.be.server.domain.coupon.exception.AlreadyUsedCouponException;
+import kr.hhplus.be.server.domain.product.exception.ProductOptionOutOfStockException;
 import kr.hhplus.be.server.domain.wallet.exception.InsufficientBalanceException;
 import kr.hhplus.be.server.interfaces.common.exception.InvalidNumberParamException;
 import kr.hhplus.be.server.interfaces.common.exception.NotFoundException;
@@ -30,6 +32,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InsufficientBalanceException.class)
     @ResponseBody
     public ResponseEntity<ApiErrorResponse> handleInsufficientBalanceException(InsufficientBalanceException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+                .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(AlreadyUsedCouponException.class)
+    @ResponseBody
+    public ResponseEntity<ApiErrorResponse> handleAlreadyUsedCouponException(AlreadyUsedCouponException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+                .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(ProductOptionOutOfStockException.class)
+    @ResponseBody
+    public ResponseEntity<ApiErrorResponse> handleProductOptionOutOfStockException(ProductOptionOutOfStockException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
                 .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }

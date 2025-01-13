@@ -16,12 +16,12 @@ public class PayRequest {
     @Schema(description = "주문 ID", example = "1")
     private Long orderId;
 
-    @Schema(description = "총 정가", example = "10000")
+    @Schema(description = "총 정가", example = "50000")
     private Long totalRegularPrice;
 
-    @Schema(description = "총 할인가", example = "3000")
+    @Schema(description = "총 할인가", example = "5000")
     private Long totalDiscountPrice;
 
-    @Schema(description = "총 판매가", example = "7000")
+    @Schema(description = "총 판매가", example = "45000")
     private Long totalSalePrice;
 }

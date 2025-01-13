@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.domain.product;
 
 import jakarta.persistence.*;
+import kr.hhplus.be.server.domain.product.exception.ProductOptionOutOfStockException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -35,4 +36,12 @@ public class ProductOption {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public void deductQuantity(Long orderCount) {
+        if (quantity < orderCount) {
+            throw new ProductOptionOutOfStockException("선택한 상품 옵션의 재고가 부족합니다.");
+        }
+
+        quantity -= orderCount;
+    }
 }

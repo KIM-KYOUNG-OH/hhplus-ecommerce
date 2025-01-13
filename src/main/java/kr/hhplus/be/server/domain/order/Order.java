@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "`order`")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,4 +41,14 @@ public class Order {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public static Order of(String orderStatus, Member member, MyCoupon myCoupon) {
+        return Order.builder()
+                .orderStatus(orderStatus)
+                .member(member)
+                .myCoupon(myCoupon)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
 }
