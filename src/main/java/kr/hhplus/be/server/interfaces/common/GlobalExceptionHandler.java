@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.interfaces.common;
 
 import kr.hhplus.be.server.domain.coupon.exception.AlreadyUsedCouponException;
+import kr.hhplus.be.server.domain.pay.exception.DuplicatePaymentException;
 import kr.hhplus.be.server.domain.product.exception.ProductOptionOutOfStockException;
 import kr.hhplus.be.server.domain.wallet.exception.InsufficientBalanceException;
 import kr.hhplus.be.server.interfaces.common.exception.InvalidNumberParamException;
@@ -46,6 +47,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductOptionOutOfStockException.class)
     @ResponseBody
     public ResponseEntity<ApiErrorResponse> handleProductOptionOutOfStockException(ProductOptionOutOfStockException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+                .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+    }
+
+    @ExceptionHandler(DuplicatePaymentException.class)
+    @ResponseBody
+    public ResponseEntity<ApiErrorResponse> handleDuplicatePaymentException(DuplicatePaymentException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
                 .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
     }
