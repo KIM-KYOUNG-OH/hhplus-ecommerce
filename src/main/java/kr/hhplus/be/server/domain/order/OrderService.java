@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,7 +27,12 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public Order findById(Long orderId) {
-        return orderRepository.findById(orderId).orElseThrow(() -> new NotFoundException("주문 정보를 찾을 수 없습니다."));
+    public Order findByIdWithLock(Long orderId) {
+        return orderRepository.findByIdWithLock(orderId).orElseThrow(() -> new NotFoundException("주문 정보를 찾을 수 없습니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Order> findMyOrdersById(Long memberId) {
+        return orderRepository.findMyOrdersById(memberId);
     }
 }

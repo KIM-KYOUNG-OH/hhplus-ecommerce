@@ -70,7 +70,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public ProductOption findProductOptionById(Long productOptionId) {
-        return productOptionRepository.findByIdWithJoin(productOptionId).orElseThrow(() -> new NotFoundException("선택한 상품 옵션을 찾을 수 없습니다."));
+    public ProductOption findByIdWithLock(Long productOptionId) {
+        return productOptionRepository.findByIdWithLock(productOptionId).orElseThrow(() -> new NotFoundException("선택한 상품 옵션을 찾을 수 없습니다."));
     }
 }

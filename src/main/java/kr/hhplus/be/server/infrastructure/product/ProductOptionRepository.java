@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface ProductOptionRepository extends JpaRepository<ProductOption, Long> {
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
         SELECT po
         FROM ProductOption po
@@ -18,12 +18,4 @@ public interface ProductOptionRepository extends JpaRepository<ProductOption, Lo
         WHERE po.productOptionId = :productOptionId
     """)
     Optional<ProductOption> findByIdWithLock(@Param("productOptionId") Long productOptionId);
-
-    @Query("""
-        SELECT po
-        FROM ProductOption po
-        JOIN FETCH Product p on p.productId = po.product.productId
-        WHERE po.productOptionId = :productOptionId
-    """)
-    Optional<ProductOption> findByIdWithJoin(@Param("productOptionId") Long productOptionId);
 }

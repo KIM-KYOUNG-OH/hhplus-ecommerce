@@ -23,6 +23,8 @@ public class OrderRequest {
 
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class OrderItem {
 
         @Schema(description = "상품 ID", example = "1")
