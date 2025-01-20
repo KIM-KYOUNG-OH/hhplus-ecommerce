@@ -127,28 +127,31 @@ CREATE TABLE `payment` (
     UNIQUE KEY `UKmf7n8wo2rwrxsd6f3t9ub2mep` (`order_id`)
 ) ENGINE=InnoDB;
 
-INSERT INTO member(member_name, created_at, updated_at) VALUES ('김항해', NOW(), NOW());
-INSERT INTO wallet (member_id, balance, created_at, updated_at) VALUES(1, 100000, NOW(), NOW());
-INSERT INTO brand(BRAND_NAME, CREATED_AT, UPDATED_AT) VALUES ('나이키', NOW(), NOW());
-INSERT INTO brand(BRAND_NAME, CREATED_AT, UPDATED_AT) VALUES ('아디다스', NOW(), NOW());
-INSERT INTO product(PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES('바지', 1, NOW(), NOW());
-INSERT INTO product(PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES('셔츠', 1, NOW(), NOW());
-INSERT INTO product(PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES('양말', 2, NOW(), NOW());
-INSERT INTO product(PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES('신발', 2, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('파란색', 100, 5000, 1, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('노란색', 300, 6000, 1, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('스몰', 150, 2000, 2, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('라지', 200, 3000, 2, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('미디움', 400, 3000, 2, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('흰색', 150, 6000, 3, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('250', 50, 23000, 4, NOW(), NOW());
-INSERT INTO product_option(option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES ('280', 20, 22000, 4, NOW(), NOW());
-INSERT INTO product_statistics(PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (1, STR_TO_DATE('20250112', '%Y%m%d'), 5, NOW(), NOW());
-INSERT INTO product_statistics(PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (2, STR_TO_DATE('20250113', '%Y%m%d'), 5000, NOW(), NOW());
-INSERT INTO product_statistics(PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (3, STR_TO_DATE('20250111', '%Y%m%d'), 5, NOW(), NOW());
-INSERT INTO product_statistics(PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (3, STR_TO_DATE('20250112', '%Y%m%d'), 55, NOW(), NOW());
-INSERT INTO coupon (coupon_name, discount_type, discount_amount, quantity, created_at, updated_at) VALUES('선착순 정율 쿠폰', 'RATE', 10, 100, NOW(), NOW());
-INSERT INTO coupon (coupon_name, discount_type, discount_amount, quantity, created_at, updated_at) VALUES('선착순 정액 쿠폰', 'FIXED', 1000, 50, NOW(), NOW());
-INSERT INTO my_coupon (member_id, coupon_id, is_used, created_at, update_at) VALUES(1, 1, 0, NOW(), NOW());
-INSERT INTO my_coupon (member_id, coupon_id, is_used, created_at, update_at) VALUES(1, 2, 0, NOW(), NOW());
+INSERT INTO member(member_id, member_name, created_at, updated_at) VALUES (1, '김항해', NOW(), NOW());
+INSERT INTO member(member_id, member_name, created_at, updated_at) VALUES (2, '홍길동', NOW(), NOW());
+INSERT INTO wallet (member_id, balance, created_at, updated_at) VALUES(1, 0, NOW(), NOW());
+INSERT INTO wallet (member_id, balance, created_at, updated_at) VALUES(2, 10000, NOW(), NOW());
+INSERT INTO brand(brand_id, BRAND_NAME, CREATED_AT, UPDATED_AT) VALUES (1, '나이키', NOW(), NOW());
+INSERT INTO brand(brand_id, BRAND_NAME, CREATED_AT, UPDATED_AT) VALUES (2, '아디다스', NOW(), NOW());
+INSERT INTO product(product_id, PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES(1, '바지', 1, NOW(), NOW());
+INSERT INTO product(product_id, PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES(2, '셔츠', 1, NOW(), NOW());
+INSERT INTO product(product_id, PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES(3, '양말', 2, NOW(), NOW());
+INSERT INTO product(product_id, PRODUCT_NAME, BRAND_ID, CREATED_AT, UPDATED_AT) VALUES(4, '신발', 2, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (1, '파란색', 100, 5000, 1, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (2, '노란색', 300, 6000, 1, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (3, '스몰', 150, 2000, 2, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (4, '라지', 200, 3000, 2, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (5, '미디움', 400, 3000, 2, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (6, '흰색', 150, 6000, 3, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (7, '250', 50, 23000, 4, NOW(), NOW());
+INSERT INTO product_option(product_option_id, option_name, QUANTITY, REGULAR_PRICE, PRODUCT_ID ,CREATED_AT, UPDATED_AT) VALUES (8, '280', 20, 22000, 4, NOW(), NOW());
+INSERT INTO product_statistics(product_statistics_id, PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (1, 1, STR_TO_DATE('20250112', '%Y%m%d'), 5, NOW(), NOW());
+INSERT INTO product_statistics(product_statistics_id, PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (2, 2, STR_TO_DATE('20250113', '%Y%m%d'), 5000, NOW(), NOW());
+INSERT INTO product_statistics(product_statistics_id, PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (3, 3, STR_TO_DATE('20250111', '%Y%m%d'), 5, NOW(), NOW());
+INSERT INTO product_statistics(product_statistics_id, PRODUCT_ID, TARGET_DATE, ORDER_QUANTITY, CREATED_AT, UPDATED_AT) VALUES (4, 3, STR_TO_DATE('20250112', '%Y%m%d'), 55, NOW(), NOW());
+INSERT INTO coupon (coupon_id, coupon_name, discount_type, discount_amount, quantity, created_at, updated_at) VALUES(1, '선착순 정율 쿠폰', 'RATE', 10, 100, NOW(), NOW());
+INSERT INTO coupon (coupon_id, coupon_name, discount_type, discount_amount, quantity, created_at, updated_at) VALUES(2, '선착순 정액 쿠폰', 'FIXED', 1000, 50, NOW(), NOW());
+INSERT INTO my_coupon (coupon_issued_id, member_id, coupon_id, is_used, created_at, update_at) VALUES(1, 2, 1, 0, NOW(), NOW());
+INSERT INTO `order` (order_id, order_status, member_id, coupon_issued_id, created_at, updated_at) VALUES(1, 'COMPLETED', 2, 1, NOW(), NOW());
+
 

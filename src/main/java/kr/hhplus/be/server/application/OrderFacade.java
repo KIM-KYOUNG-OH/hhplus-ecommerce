@@ -13,11 +13,13 @@ import kr.hhplus.be.server.domain.product.ProductOption;
 import kr.hhplus.be.server.domain.product.ProductService;
 import kr.hhplus.be.server.interfaces.dto.OrderRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class OrderFacade {
 
     private final MemberService memberService;
@@ -42,7 +44,7 @@ public class OrderFacade {
         Order order = orderService.save(Order.of(OrderStatus.COMPLETED.name(), findMember, myCoupon));
 
         request.getOrderItems().forEach(i -> {
-            ProductOption findProductOption = productService.findProductOptionById(i.getProductOptionId());
+            ProductOption findProductOption = productService.findByIdWithLock(i.getProductOptionId());
             OrderItem orderItem = OrderItem.of(order, findProductOption.getProduct(), findProductOption, i.getOrderCount());
             orderService.saveOrderItem(orderItem);
         });
