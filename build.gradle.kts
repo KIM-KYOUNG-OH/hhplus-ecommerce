@@ -46,6 +46,8 @@ dependencies {
 
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.2.0")
 
+	implementation("org.springframework.retry:spring-retry:2.0.11")
+
 	// Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")

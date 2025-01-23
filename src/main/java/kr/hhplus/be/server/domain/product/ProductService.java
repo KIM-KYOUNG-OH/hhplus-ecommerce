@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.domain.product;
 
+import jakarta.persistence.OptimisticLockException;
 import kr.hhplus.be.server.infrastructure.product.ProductOptionRepository;
 import kr.hhplus.be.server.infrastructure.product.ProductRepository;
 import kr.hhplus.be.server.infrastructure.product.ProductStatisticsRepository;
@@ -7,6 +8,8 @@ import kr.hhplus.be.server.interfaces.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,12 +66,14 @@ public class ProductService {
         return result;
     }
 
+    @Retryable(retryFor = OptimisticLockException.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
     @Transactional
     public void deductQuantityWithLock(Long productOptionId, Long orderCount) {
         ProductOption findProductOption = productOptionRepository.findByIdWithLock(productOptionId).orElseThrow(() -> new NotFoundException("주문한 상품을 찾을 수 없습니다."));
         findProductOption.deductQuantity(orderCount);
     }
 
+    @Retryable(retryFor = OptimisticLockException.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
     @Transactional(readOnly = true)
     public ProductOption findByIdWithLock(Long productOptionId) {
         return productOptionRepository.findByIdWithLock(productOptionId).orElseThrow(() -> new NotFoundException("선택한 상품 옵션을 찾을 수 없습니다."));
