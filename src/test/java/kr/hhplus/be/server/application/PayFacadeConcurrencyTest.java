@@ -25,7 +25,6 @@ import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Transactional
 @SpringBootTest
 class PayFacadeConcurrencyTest {
 
@@ -43,6 +42,7 @@ class PayFacadeConcurrencyTest {
 
     @DisplayName("한 주문에 대한 결제 요청을 동시에 10회 처리할 경우, 1건 결제 성공(그외 9건 중복 예외 발생) 및 유저 쿠폰 사용처리")
     @Test
+    @Transactional
     void orderConcurrencyTest() throws InterruptedException {
         int threadCount = 10;
         CountDownLatch latch = new CountDownLatch(threadCount);

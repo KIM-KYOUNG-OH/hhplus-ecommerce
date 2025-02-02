@@ -18,7 +18,6 @@ import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Transactional
 @SpringBootTest
 class OrderFacadeConcurrencyTest {
 
@@ -33,6 +32,7 @@ class OrderFacadeConcurrencyTest {
 
     @DisplayName("한 회원이 동시에 10회 주문 요청할 경우, 주문 10회 생성 및 상품 재고 20개 차감")
     @Test
+    @Transactional
     void orderConcurrencyTest() throws InterruptedException {
         int threadCount = 10;
         CountDownLatch latch = new CountDownLatch(threadCount);

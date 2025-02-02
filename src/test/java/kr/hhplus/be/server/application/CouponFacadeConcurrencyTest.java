@@ -17,7 +17,6 @@ import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Transactional
 @SpringBootTest
 class CouponFacadeConcurrencyTest {
 
@@ -29,6 +28,7 @@ class CouponFacadeConcurrencyTest {
 
     @DisplayName("한 회원에게 쿠폰 발급을 10회 동시에 요청할 경우, 해당 유저에게 쿠폰 총 10개가 발급되며 쿠폰 재고가 10개 차감됌")
     @Test
+    @Transactional
     void issueCouponConcurrencyTest() throws InterruptedException {
         int threadCount = 10;
         CountDownLatch latch = new CountDownLatch(threadCount);

@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.domain.coupon;
 
+import jakarta.persistence.OptimisticLockException;
 import kr.hhplus.be.server.domain.member.Member;
 import kr.hhplus.be.server.infrastructure.coupon.CouponRepository;
 import kr.hhplus.be.server.infrastructure.coupon.MyCouponRepository;
@@ -7,6 +8,8 @@ import kr.hhplus.be.server.interfaces.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +31,7 @@ public class CouponService {
     }
 
     @Transactional
+    @Retryable(retryFor = OptimisticLockException.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
     public void issueCouponWithLock(Member member, Long couponId) {
         Coupon coupon = couponRepository.findCouponByIdWithLock(couponId).orElseThrow(() -> new NotFoundException("해당 쿠폰을 찾을 수 없습니다."));
         coupon.deductQuantity();

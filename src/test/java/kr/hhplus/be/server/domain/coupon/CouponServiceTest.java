@@ -35,7 +35,7 @@ class CouponServiceTest {
 
     @Test
     void 쿠폰조회_성공() {
-        Coupon coupon = new Coupon(1L, "쿠폰1", DiscountType.RATE.name(), 10L, 10L, LocalDateTime.now(), LocalDateTime.now());
+        Coupon coupon = new Coupon(1L, "쿠폰1", DiscountType.RATE.name(), 10L, 10L, LocalDateTime.now(), LocalDateTime.now(), 0);
         when(couponRepository.findById(1L)).thenReturn(Optional.of(coupon));
 
         Coupon findCoupon = couponService.findCouponById(1L);
@@ -54,7 +54,7 @@ class CouponServiceTest {
     @Test
     void 선착순쿠폰발급_성공() {
         Member member = Member.of(1L, "홍길동");
-        Coupon coupon = new Coupon(1L, "선착순쿠폰", DiscountType.RATE.name(), 10L, 5L, LocalDateTime.now(), LocalDateTime.now());
+        Coupon coupon = new Coupon(1L, "선착순쿠폰", DiscountType.RATE.name(), 10L, 5L, LocalDateTime.now(), LocalDateTime.now(), 0);
         when(couponRepository.findCouponByIdWithLock(1L)).thenReturn(Optional.of(coupon));
         when(myCouponRepository.save(any(MyCoupon.class))).thenReturn(any(MyCoupon.class));
 

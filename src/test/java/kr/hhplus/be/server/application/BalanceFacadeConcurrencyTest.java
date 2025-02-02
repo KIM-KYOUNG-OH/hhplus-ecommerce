@@ -12,7 +12,6 @@ import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Transactional
 @SpringBootTest
 class BalanceFacadeConcurrencyTest {
 
@@ -21,6 +20,7 @@ class BalanceFacadeConcurrencyTest {
 
     @DisplayName("한 회원에게 1000원씩 10회 동시에 충전할 경우, 총 10000원 충전됌")
     @Test
+    @Transactional
     void chargeConcurrentTest() throws InterruptedException {
         int threadCount = 10;
         CountDownLatch latch = new CountDownLatch(threadCount);
