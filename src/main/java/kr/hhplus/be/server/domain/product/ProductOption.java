@@ -37,9 +37,6 @@ public class ProductOption {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Version
-    private int version;
-
     public void deductQuantity(Long orderCount) {
         if (quantity < orderCount) {
             throw new ProductOptionOutOfStockException("선택한 상품 옵션의 재고가 부족합니다.");

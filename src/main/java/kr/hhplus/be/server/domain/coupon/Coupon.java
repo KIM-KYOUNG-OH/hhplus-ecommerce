@@ -36,9 +36,6 @@ public class Coupon {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Version
-    private int version;
-
     public void deductQuantity() {
         if (quantity <= 0) {
             throw new CouponOutOfStockException("쿠폰 재고가 부족합니다.");

@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface ProductOptionRepository extends JpaRepository<ProductOption, Long> {
-    @Lock(LockModeType.READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
         SELECT po
         FROM ProductOption po
