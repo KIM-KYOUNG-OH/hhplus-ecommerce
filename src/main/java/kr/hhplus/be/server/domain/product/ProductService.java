@@ -5,6 +5,7 @@ import kr.hhplus.be.server.infrastructure.product.ProductRepository;
 import kr.hhplus.be.server.infrastructure.product.ProductStatisticsRepository;
 import kr.hhplus.be.server.interfaces.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -35,7 +37,11 @@ public class ProductService {
             throw new IllegalArgumentException("검색 시작일은 검색 종료일보다 이전값이어야 합니다.");
         }
 
+        long start = System.currentTimeMillis();
         List<ProductStatistics> list = productStatisticsRepository.findListBetween(searchStartDate, searchEndDate);
+        long end = System.currentTimeMillis();
+
+        log.info("findListBetween 실행 시간: {} ms", (end - start));
 
         Map<Long, Long> groupedByProductId = list.stream()
                 .collect(Collectors.groupingBy(
